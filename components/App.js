@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios';
+import FileUpload from './FileUpload';
 
 
 class App extends Component{
@@ -10,7 +11,7 @@ class App extends Component{
 
 
   componentDidMount(){
-    this.compressImage();
+    //this.compressImage();
   }
 
   /* Funtion which send a request to tiny png */
@@ -41,7 +42,9 @@ class App extends Component{
 
   render(){
     return(
-      <div className="mainContainer"></div>
+      <div className="mainContainer">
+        <FileUpload />
+      </div>
     );
   }
 

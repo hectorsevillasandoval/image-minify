@@ -21,6 +21,7 @@
     "live-server-https": "0.0.2",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
+    "react-dropzone": "^3.12.4",
     "tinify": "^1.5.0",
     "webpack": "^2.4.1"
   }
