@@ -7,6 +7,11 @@ class App extends Component{
 
   constructor(props){
     super(props);
+    this.state = {
+      files: ["no data"]
+    };
+
+    this.compressImage = this.compressImage.bind(this);
   }
 
 
@@ -16,34 +21,34 @@ class App extends Component{
 
   /* Funtion which send a request to tiny png */
 
-  compressImage(){
-    axios({
-      url: "/shrink",
-      baseURL: "https://api.tinify.com/",
-      method: "post",
-      headers: {
-                  "Content-Type": "application/json",
-                  "Authorization": "Basic YXBpOjZKQWNualI5ek40Ql9Qb1hfc0FreXlBRmxleG12NGpR"
-                },
-      data: {
-            	"source": {
-                "url": "http://www.whitesharkmedia.com/wp-content/themes/WhitesSharkMediaV2/new-homepage/images/bg-banner.jpg"
-            	}
-            }
+  compressImage(val){
+    this.setState({
+      files: val
+    }, this.sendRequestToCompress );
+  }
 
-    })
+  sendRequestToCompress(){
+
+    
+    const url = "https://api.tinify.com/shrink",
+            config = {
+              headers: { 'Content-Type': this.state.files[0].type, "Authorization": "Basic YXBpOjZKQWNualI5ek40Ql9Qb1hfc0FreXlBRmxleG12NGpR" }
+          };
+
+    axios.post(url, this.state.files[0], config)
     .then(function(response){
       console.log(response);
     })
     .catch(function (error) {
-      console.log(error);
+      console.log("Fucking Error: " + error);
     });
+
   }
 
   render(){
     return(
       <div className="mainContainer">
-        <FileUpload />
+        <FileUpload onChange={this.compressImage} />
       </div>
     );
   }

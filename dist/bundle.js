@@ -10721,7 +10721,14 @@ var App = function (_Component) {
   function App(props) {
     _classCallCheck(this, App);
 
-    return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
+
+    _this.state = {
+      files: ["no data"]
+    };
+
+    _this.compressImage = _this.compressImage.bind(_this);
+    return _this;
   }
 
   _createClass(App, [{
@@ -10734,25 +10741,24 @@ var App = function (_Component) {
 
   }, {
     key: 'compressImage',
-    value: function compressImage() {
-      (0, _axios2.default)({
-        url: "/shrink",
-        baseURL: "https://api.tinify.com/",
-        method: "post",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": "Basic YXBpOjZKQWNualI5ek40Ql9Qb1hfc0FreXlBRmxleG12NGpR"
-        },
-        data: {
-          "source": {
-            "url": "http://www.whitesharkmedia.com/wp-content/themes/WhitesSharkMediaV2/new-homepage/images/bg-banner.jpg"
-          }
-        }
+    value: function compressImage(val) {
+      this.setState({
+        files: val
+      }, this.sendRequestToCompress);
+    }
+  }, {
+    key: 'sendRequestToCompress',
+    value: function sendRequestToCompress() {
 
-      }).then(function (response) {
+      var url = "https://api.tinify.com/shrink",
+          config = {
+        headers: { 'Content-Type': this.state.files[0].type, "Authorization": "Basic YXBpOjZKQWNualI5ek40Ql9Qb1hfc0FreXlBRmxleG12NGpR" }
+      };
+
+      _axios2.default.post(url, this.state.files[0], config).then(function (response) {
         console.log(response);
       }).catch(function (error) {
-        console.log(error);
+        console.log("Fucking Error: " + error);
       });
     }
   }, {
@@ -10761,7 +10767,7 @@ var App = function (_Component) {
       return _react2.default.createElement(
         'div',
         { className: 'mainContainer' },
-        _react2.default.createElement(_FileUpload2.default, null)
+        _react2.default.createElement(_FileUpload2.default, { onChange: this.compressImage })
       );
     }
   }]);
@@ -11662,12 +11668,22 @@ var FileUpload = function (_Component) {
     var _this = _possibleConstructorReturn(this, (FileUpload.__proto__ || Object.getPrototypeOf(FileUpload)).call(this, props));
 
     _this.state = {
-      files: {}
+      files: []
     };
+
+    _this.onDrop = _this.onDrop.bind(_this);
     return _this;
   }
 
   _createClass(FileUpload, [{
+    key: 'onDrop',
+    value: function onDrop(acceptedFiles) {
+
+      this.setState({ files: acceptedFiles }, function () {
+        this.props.onChange(this.state.files);
+      });
+    }
+  }, {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
@@ -11681,7 +11697,31 @@ var FileUpload = function (_Component) {
             null,
             'Try dropping some files here, or click to select files to upload.'
           )
-        )
+        ),
+        _react2.default.createElement(
+          'h4',
+          null,
+          'Files: ',
+          this.state.files.length
+        ),
+        this.state.files.length > 0 ? _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement(
+            'h2',
+            null,
+            'Uploading ',
+            this.state.files.length,
+            ' files...'
+          ),
+          _react2.default.createElement(
+            'div',
+            null,
+            this.state.files.map(function (file) {
+              return _react2.default.createElement('img', { key: file.name, src: file.preview });
+            })
+          )
+        ) : null
       );
     }
   }]);
