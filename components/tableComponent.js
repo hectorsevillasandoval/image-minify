@@ -30,7 +30,9 @@ class tableComponent extends Component{
       };
     }
 
-
+    componentDidMount(){
+      console.log(this.props.files);
+    }
 
     render(){
       return(

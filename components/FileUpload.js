@@ -17,7 +17,10 @@ class FileUpload extends Component{
 
   onDrop(acceptedFiles){
 
-    this.setState({ files: acceptedFiles }, function(){ this.props.onChange(this.state.files); });
+    this.setState({ files: acceptedFiles },
+      function(){
+        this.props.onDrop(this.state.files);
+      });
 
   }
 

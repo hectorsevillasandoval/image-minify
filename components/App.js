@@ -27,6 +27,7 @@ class App extends Component{
   /* Funtion which send a request to tiny png */
 
   compressImage(files){
+
     this.setState({
       files: files
     }, this.sendRequestToCompress );
@@ -35,7 +36,7 @@ class App extends Component{
   sendRequestToCompress(){
 
 
-    const url = "https://api.tinify.com/shrink",
+    /* const url = "https://api.tinify.com/shrink",
             config = {
               headers: { 'Content-Type': this.state.files[0].type},
               auth: {
@@ -52,21 +53,24 @@ class App extends Component{
     .catch(function (error) {
       console.log("Fucking Error: " + error);
     });
-
-
+*/
+console.log(this.state.files );
 
   }
 
   render(){
     return(
       <div className="mainContainer">
-        <h2>Actual State</h2>
-        {this.state.files}
+
 
         <MuiThemeProvider>
           <div>
-            <FileUpload onChange={this.compressImage} />
+            <form>
+            <FileUpload onDrop={this.compressImage} />
+            </form>
             <TableComponent files={this.state.files} />
+
+
           </div>
         </MuiThemeProvider>
 
