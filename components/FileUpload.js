@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import Dropzone from 'react-dropzone';
 
+
+
 class FileUpload extends Component{
 
   constructor(props){
@@ -26,6 +28,9 @@ class FileUpload extends Component{
         <Dropzone onDrop={this.onDrop} >
           <div>Try dropping some files here, or click to select files to upload.</div>
         </Dropzone>
+
+
+
 
         <h4>Files: {this.state.files.length}</h4>
 

@@ -19,9 +19,11 @@
     "babel-preset-react": "^6.24.1",
     "fs": "0.0.1-security",
     "live-server-https": "0.0.2",
+    "material-ui": "^0.18.0",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
     "react-dropzone": "^3.12.4",
+    "react-tap-event-plugin": "^2.0.1",
     "tinify": "^1.5.0",
     "webpack": "^2.4.1"
   }
